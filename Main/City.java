@@ -10,11 +10,11 @@ import Main.Vehicles.*;
 public class City {
     private ArrayList<Person> persons;
     private ArrayList<Hotel> hotels;
-    private ArrayList<Vehicle> vehicles;
-    private ArrayList<Terminal> terminals;
+    private final ArrayList<Vehicle> vehicles;
+    private final ArrayList<Terminal> terminals;
     private int population;
     private double budget;
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
 
 
     public City(double budget) {
@@ -82,10 +82,7 @@ public class City {
         input.nextLine();
 
         System.out.println("Is this an international Airport?\n1. YES\n2. NO");
-        boolean international = false;
-        if (input.nextLine().equals("1")) {
-            international = true;
-        }
+        boolean international = input.nextLine().equals("1");
         System.out.print("Enter number of runways:");
         int numberOfRunways = input.nextInt();
         input.nextLine();
@@ -157,7 +154,12 @@ public class City {
     }
 
     public void chooseTerminal() {
-        System.out.println("What kind of terminal do you want to build?\n1. Airport\n2. Bus Terminal\n3. Port\n4. Train Station");
+        System.out.println("""
+                What kind of terminal do you want to build?
+                1. Airport
+                2. Bus Terminal
+                3. Port
+                4. Train Station""");
         String choice = input.nextLine();
         switch (choice) {
             case "1":
@@ -221,34 +223,23 @@ public class City {
         }      
     }
 
-    // public void showAirports() {
-    //     int i = 1;
-    //     for (Airport airport : this.airports) {
-    //         System.out.print(i++ + ". ");
-    //         System.out.println(airport.getName());
-    //     }
-    // }
-
     public void showTerminals() {
         int i = 1;
         for (Terminal terminal : this.terminals) {
-            if (terminal instanceof Airport) {
-                Airport airport = (Airport) terminal;
+            if (terminal instanceof Airport airport) {
                 System.out.print(i++ + ". ");
-                System.out.println(airport.getName());   
-            } else if (terminal instanceof BusTerminal) {
-                BusTerminal busTerminal = (BusTerminal) terminal;
+                System.out.println(airport);
+            } else if (terminal instanceof BusTerminal busTerminal) {
                 System.out.print(i++ + ". ");
-                System.out.println(busTerminal.getName()); 
-            } else if (terminal instanceof Port) {
-                Port port = (Port) terminal;
+                System.out.println(busTerminal);
+            } else if (terminal instanceof Port port) {
                 System.out.print(i++ + ". ");
-                System.out.println(port.getName()); 
-            } else if (terminal instanceof TrainStation) {
-                TrainStation trainStation = (TrainStation) terminal;
+                System.out.println(port);
+            } else if (terminal instanceof TrainStation trainStation) {
                 System.out.print(i++ + ". ");
-                System.out.println(trainStation.getName()); 
+                System.out.println(trainStation);
             }
+            System.out.println("=========");
         }
     }
 
@@ -259,19 +250,12 @@ public class City {
         return this.terminals.get(Integer.parseInt(choice) - 1);
     }
 
-    // public Airport selectAirport() {
-    //     showAirports();
-    //     System.out.println("select an airport:");
-    //     String choice = input.nextLine();
-    //     return this.airports.get(Integer.parseInt(choice) - 1);
-    // }
-
-
     public void showVehicles() {
         int i = 1;
         for (Vehicle vehicle : this.vehicles) {
             System.out.print(i++ + ". ");
-            System.out.println(vehicle.getID());
+            System.out.println(vehicle.toString());
+            System.out.println("=============");
         }
     }
 
@@ -374,26 +358,46 @@ public class City {
             System.out.println("Successfully added");
         }
     }
-    // public void showAirportAirVehicles(Airport airport) {
-    //     for (AirVehicle airVehicle : airport.getAirVehicles()) {
-    //         System.out.println(airVehicle.getID());
-    //     }
-    // }
 
-
-
-    // public void showAirportAirVehicles(Airport airport) {
-    //     for (AirVehicle airVehicle : airport.getAirVehicles()) {
-    //         System.out.println(airVehicle.getID());
-    //     }
-    // }
-
+     public void showTerminalVehicles() {
+         Terminal terminal = selectTerminal();
+         if (terminal instanceof Airport airport) {
+             int i = 1;
+             for (Vehicle vehicle : airport.getAirVehicles()) {
+                 System.out.print(i++ + ". ");
+                 System.out.println(vehicle.toString());
+                 System.out.println("=============");
+             }
+         } else if (terminal instanceof BusTerminal busTerminal) {
+             int i = 1;
+             for (Vehicle vehicle : busTerminal.getBuses()) {
+                 System.out.print(i++ + ". ");
+                 System.out.println(vehicle.toString());
+                 System.out.println("=============");
+             }
+         } else if (terminal instanceof Port port) {
+             int i = 1;
+             for (Vehicle vehicle : port.getSeaVehicles()) {
+                 System.out.print(i++ + ". ");
+                 System.out.println(vehicle.toString());
+                 System.out.println("=============");
+             }
+         } else if (terminal instanceof TrainStation trainStation) {
+             int i = 1;
+             for (Vehicle vehicle : trainStation.getTrains()) {
+                 System.out.print(i++ + ". ");
+                 System.out.println(vehicle.toString());
+                 System.out.println("=============");
+             }
+         }
+     }
 
     public void showPeople() {
         int i = 1;
         for (Person person : this.persons) {
-            System.out.print(i + ". ");
-            System.out.println(person.getLastName());
+            System.out.print(i++ + ". ");
+            System.out.println(person.toString());
+            System.out.println("==============");
         }
     }
 
@@ -406,59 +410,98 @@ public class City {
 
     public void hireEmployee(Terminal terminal) {
         Person person = selectPerson();
+        if (person.getSalary() > this.budget) {
+            System.out.println("low on budget cannot afford salary");
+            return;
+        }
         terminal.addEmployee(person);
+        this.persons.remove(person);
         System.out.println("Successfully hired");
     }
 
     public void showEmployees(Terminal terminal) {
         for (Person person : terminal.getEmployees()) {
-            System.out.println(person.getLastName());
+            System.out.println(person.toString());
+            System.out.println("===========");
         }
     }
 
-    // public void buildHotel() {
-    //     Hotel hotel = getHotelFromUser();
-    //     if (hotel.getCost() > this.budget) {
-    //         System.out.println("low on budget");
-    //     } else {
-    //         this.budget -= hotel.getCost();
-    //         hotels.add(hotel);
-    //         System.out.println("successfully built");
-    //     }
-        
-    // }
+     public void buildHotel() {
+         Hotel hotel = getHotelFromUser();
+         if (hotel.getCost() > this.budget) {
+             System.out.println("low on budget");
+         } else {
+             this.budget -= hotel.getCost();
+             hotels.add(hotel);
+             System.out.println("successfully built");
+         }
+     }
 
     public void showHotels() {
         int i = 1;
         for (Hotel hotel : this.hotels) {
-            System.out.print(i + ". ");
-            System.out.println(hotel.getName());
+            System.out.print(i++ + ". ");
+            System.out.println(hotel.toString());
+            System.out.println("==========");
         }
     }
 
-//     public Hotel getHotelFromUser() {
-//         System.out.print("Please Enter Hotel info:\nenter cost:");
-//         double cost = input.nextDouble();
-//         input.nextLine();
-//         System.out.print("Enter city:");
-//         String city = input.nextLine();
-//         System.out.print("Enter the name:");
-//         String name = input.nextLine();
-//         System.out.print("Enter address:");
-//         String address = input.nextLine();
-//         System.out.print("Enter the area:");
-//         double area = input.nextDouble();
-//         input.nextLine();
+     public Hotel getHotelFromUser() {
+         System.out.print("Please Enter Hotel info:\nenter cost:");
+         double cost = input.nextDouble();
+         input.nextLine();
+         System.out.print("Enter the name:");
+         String name = input.nextLine();
+         System.out.print("Enter address:");
+         String address = input.nextLine();
+         System.out.print("Enter the stars:");
+         int stars = input.nextInt();
+         input.nextLine();
 
-//         System.out.println("Is this an international Airport?\n1. YES\n2. NO");
-//         boolean international = false;
-//         if (input.nextLine().equals("1")) {
-//             international = true;
-//         }
-//         System.out.print("Enter number of runways:");
-//         int numberOfRunways = input.nextInt();
-//         input.nextLine();
+         return new Hotel(name, cost, address, stars, Facilities.RESTAURANT);
+     }
 
-//         return new Hotel(name, cost, address, stars, roomCount, rooms, facilities);  
-//     }
+    public HotelRoom getHotelRoomFromUser() {
+        System.out.print("Please Enter Hotel Room info:\nenter cost: ");
+        double price = input.nextDouble();
+        input.nextLine();
+        System.out.print("Enter the room number: ");
+        int roomNumber = input.nextInt();
+        input.nextLine();
+        System.out.print("Enter bed count: ");
+        int bedCount = input.nextInt();
+        input.nextLine();
+        System.out.print("Enter the area: ");
+        double area = input.nextDouble();
+        input.nextLine();
+
+        return new HotelRoom(roomNumber, bedCount, area, price);
+    }
+
+    public Hotel selectHotel() {
+        showHotels();
+        System.out.println("select a hotel:");
+        String choice = input.nextLine();
+        return this.hotels.get(Integer.parseInt(choice) - 1);
+    }
+
+    public void buyHotelRoom() {
+        Hotel hotel = selectHotel();
+        HotelRoom hotelRoom = getHotelRoomFromUser();
+        if (hotelRoom.getPrice() > this.budget) {
+            System.out.println("you are low on budget");
+        } else {
+            hotel.addHotelRoom(hotelRoom);
+            this.budget -= hotelRoom.getPrice();
+            System.out.println("Successfully added");
+        }
+    }
+
+    public void showHotelRooms() {
+        Hotel hotel = selectHotel();
+        for (HotelRoom hotelRoom : hotel.getRooms()) {
+            System.out.println(hotelRoom.toString());
+            System.out.println("===========");
+        }
+    }
 }

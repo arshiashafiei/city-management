@@ -5,11 +5,20 @@ public class Train extends GroundVehicle {
     private int stars;
     private Facilities facilities;
 
-    public Train(double price, double capacity, String factory, double cargoCapacity, boolean camera, double efficiency, int numberOFWagons, int stars) {
+    public Train(double price, double capacity, String factory, double cargoCapacity, boolean camera, double efficiency, int numberOFWagons, int stars, Facilities facilities) {
         super(price, capacity, factory, cargoCapacity, camera, efficiency);
         this.numberOFWagons = numberOFWagons;
         this.stars = stars;
-        // this.facilities = facilities;
+        this.facilities = facilities;
+    }
+
+    @Override
+    public String toString() {
+        return  "Train" + '\n' +
+                "numberOFWagons=: " + numberOFWagons + '\n' +
+                "stars: " + stars + '\n' +
+                "facilities: " + facilities + '\n' +
+                super.toString();
     }
 
     public int getNumberOFWagons() {

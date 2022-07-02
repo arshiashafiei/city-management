@@ -11,6 +11,13 @@ public abstract class SeaVehicle extends Vehicle {
         this.lowestDepth = lowestDepth;
     }
 
+    @Override
+    public String toString() {
+        return  "fuelType: " + fuelType +  '\n' +
+                "lowestDepth: " + lowestDepth + '\n' +
+                super.toString();
+    }
+
     public String getFuelType() {
         return this.fuelType;
     }

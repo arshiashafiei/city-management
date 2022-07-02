@@ -1,4 +1,7 @@
 package Main;
+
+import java.util.Objects;
+
 public class Person {
     private String firstName;
     private String lastName;
@@ -16,6 +19,33 @@ public class Person {
         this.job = job;
         this.gender = gender;
         this.salary = salary;
+    }
+
+    @Override
+    public String toString() {
+        return  "firstName: " + firstName + '\n' +
+                "lastName: " + lastName + '\n' +
+                "birthYear: " + birthYear + '\n' +
+                "birthCity: " + birthCity + '\n' +
+                "job: " + job + '\n' +
+                "gender: " + gender + '\n' +
+                "salary: " + salary;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Person person = (Person) o;
+
+        if (birthYear != person.birthYear) return false;
+        if (Double.compare(person.salary, salary) != 0) return false;
+        if (!Objects.equals(firstName, person.firstName)) return false;
+        if (!Objects.equals(lastName, person.lastName)) return false;
+        if (!Objects.equals(birthCity, person.birthCity)) return false;
+        if (!Objects.equals(job, person.job)) return false;
+        return Objects.equals(gender, person.gender);
     }
 
     public String getFirstName() {

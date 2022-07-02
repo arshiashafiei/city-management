@@ -10,6 +10,13 @@ public class Bus extends GroundVehicle {
         this.wheelType = wheelType;
     }
 
+    @Override
+    public String toString() {
+        return  "Bus" +  '\n' +
+                "wheelType: " + wheelType +  '\n' +
+                "topSpeed: " + topSpeed + '\n' +
+                super.toString();
+    }
 
     public String getWheelType() {
         return this.wheelType;

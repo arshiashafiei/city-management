@@ -12,6 +12,11 @@ public class BusTerminal extends Terminal {
         this.buses = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "Bus Terminal" + '\n' +
+                super.toString();
+    }
 
     public ArrayList<Bus> getBuses() {
         return this.buses;
@@ -23,6 +28,6 @@ public class BusTerminal extends Terminal {
 
     public void addVehicle(Bus bus) {
         this.buses.add(bus);
-        
+        increaseNumberOfVehicles();
     }
 }

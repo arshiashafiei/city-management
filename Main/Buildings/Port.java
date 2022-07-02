@@ -15,6 +15,12 @@ public class Port extends Terminal {
         this.seaVehicles = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "Port" + '\n' +
+                "numberOfDocks: " + numberOfDocks + '\n' +
+                super.toString();
+    }
 
     public int getNumberOfDocks() {
         return this.numberOfDocks;
@@ -34,7 +40,7 @@ public class Port extends Terminal {
 
     public void addVehicle(SeaVehicle seaVehicle) {
         this.seaVehicles.add(seaVehicle);
-        
+        increaseNumberOfVehicles();
     }
 
 }

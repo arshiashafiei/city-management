@@ -8,6 +8,13 @@ public class Ship extends SeaVehicle {
         this.numberOfRooms = numberOfRooms;
     }
 
+    @Override
+    public String toString() {
+        return "Ship" + '\n' +
+                "numberOfRooms: " + numberOfRooms + '\n' +
+                super.toString();
+    }
+
     public int getNumberOfRooms() {
         return this.numberOfRooms;
     }

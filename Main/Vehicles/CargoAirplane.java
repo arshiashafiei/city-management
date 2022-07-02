@@ -9,6 +9,13 @@ public class CargoAirplane extends AirVehicle {
 
     }
 
+    @Override
+    public String toString() {
+        return "CargoAirplane" + '\n' +
+                "transportWeight: " + transportWeight + '\n' +
+                super.toString();
+    }
+
     public double getTransportWeight() {
         return this.transportWeight;
     }

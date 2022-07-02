@@ -14,6 +14,13 @@ public class HotelRoom {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return  "roomNumber=" + roomNumber + '\n' +
+                ", bedCount=" + bedCount + '\n' +
+                ", area=" + area + '\n' +
+                ", price=" + price;
+    }
 
     public int getRoomNumber() {
         return this.roomNumber;

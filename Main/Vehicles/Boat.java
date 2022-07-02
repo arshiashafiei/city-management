@@ -11,6 +11,13 @@ public class Boat extends SeaVehicle {
 
     }
 
+    @Override
+    public String toString() {
+        return "Boat" + '\n' +
+                "weight: " + weight + '\n' +
+                "engine: " + engine + '\n' +
+                super.toString();
+    }
 
     public double getWeight() {
         return this.weight;

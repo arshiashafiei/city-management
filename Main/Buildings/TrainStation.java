@@ -17,6 +17,13 @@ public class TrainStation extends Terminal {
         this.trains = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "TrainStation" + '\n' +
+                "inRails: " + inRails + '\n' +
+                "outRails: " + outRails + '\n' +
+                super.toString();
+    }
 
     public int getInRails() {
         return this.inRails;
@@ -44,7 +51,7 @@ public class TrainStation extends Terminal {
 
     public void addVehicle(Train train) {
         this.trains.add(train);
-        
+        increaseNumberOfVehicles();
     }
     
 }

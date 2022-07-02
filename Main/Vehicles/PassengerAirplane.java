@@ -11,6 +11,14 @@ public class PassengerAirplane extends AirVehicle {
 
     }
 
+    @Override
+    public String toString() {
+        return "PassengerAirplane" + '\n' +
+                "numberOfPersonnel: " + numberOfPersonnel + '\n' +
+                "seatClass: " + seatClass + '\n' +
+                super.toString();
+    }
+
     public String getSeatClass() {
         return this.seatClass;
     }

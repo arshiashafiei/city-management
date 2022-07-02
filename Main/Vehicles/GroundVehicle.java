@@ -13,6 +13,13 @@ public abstract class GroundVehicle extends Vehicle {
         this.efficiency = efficiency;
     }
 
+    @Override
+    public String toString() {
+        return  "cargoCapacity: " + cargoCapacity + '\n' +
+                "camera: " + camera + '\n' +
+                "efficiency: " + efficiency + '\n' +
+                super.toString();
+    }
 
     public double getCargoCapacity() {
         return this.cargoCapacity;

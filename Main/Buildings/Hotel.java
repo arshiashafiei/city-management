@@ -14,17 +14,30 @@ public class Hotel {
     private Facilities facilities;
 
 
-    public Hotel(String name, double cost, String address, int stars, int roomCount, ArrayList<HotelRoom> rooms, Facilities facilities) {
+    public Hotel(String name, double cost, String address, int stars, Facilities facilities) {
         this.name = name;
         this.cost = cost;
         this.address = address;
         this.stars = stars;
-        this.roomCount = roomCount;
-        this.rooms = rooms;
+        this.roomCount = 0;
+        this.rooms = new ArrayList<>();
         this.facilities = facilities;
     }
 
+    @Override
+    public String toString() {
+        return  "name: " + name + '\n' +
+                "cost: " + cost + '\n' +
+                "address: " + address + '\n' +
+                "stars: " + stars + '\n' +
+                "roomCount: " + roomCount + '\n' +
+                "facilities: " + facilities;
+    }
 
+    public void addHotelRoom(HotelRoom hotelRoom) {
+        rooms.add(hotelRoom);
+        roomCount++;
+    }
     public String getName() {
         return this.name;
     }

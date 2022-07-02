@@ -3,14 +3,24 @@ package Main.Vehicles;
 public abstract class Vehicle {
     private double price;
     private double capacity;
-    private static int ID = 0;
+    private static int vehicleCount = 0;
+    private String ID;
     private String factory;
 
     public Vehicle(double price, double capacity, String factory) {
         this.price = price;
         this.capacity = capacity;
-        ID++;
+        vehicleCount++;
+        this.ID = String.valueOf(vehicleCount);
         this.factory = factory;
+    }
+
+    @Override
+    public String toString() {
+        return  "price: " + price + '\n' +
+                "capacity: " + capacity + '\n' +
+                "ID: " + ID + '\n' +
+                "factory: " + factory;
     }
 
     public double getPrice() {
@@ -29,14 +39,6 @@ public abstract class Vehicle {
         this.capacity = capacity;
     }
 
-    public int getID() {
-        return ID;
-    }
-
-    public static void setID(int newID) {
-        ID = newID;
-    }
-
     public String getFactory() {
         return this.factory;
     }
@@ -45,4 +47,19 @@ public abstract class Vehicle {
         this.factory = factory;
     }
 
+    public static int getVehicleCount() {
+        return vehicleCount;
+    }
+
+    public static void setVehicleCount(int vehicleCount) {
+        Vehicle.vehicleCount = vehicleCount;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
 }

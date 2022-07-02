@@ -10,6 +10,13 @@ public abstract class AirVehicle extends Vehicle {
         this.runwayLength = runwayLength;
     }
 
+    @Override
+    public String toString() {
+        return  "maxAltitude: " + maxAltitude + '\n' +
+                "runwayLength: " + runwayLength + '\n' +
+                super.toString();
+    }
+
     public double getMaxAltitude() {
         return this.maxAltitude;
     }

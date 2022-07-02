@@ -17,6 +17,13 @@ public class Airport extends Terminal {
         this.airVehicles = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "Airport" + '\n' +
+                "international: " + international + 'n' +
+                "number Of Runways: " + numberOfRunways + '\n'
+                + super.toString();
+    }
 
     public boolean isInternational() {
         return this.international;
@@ -44,6 +51,6 @@ public class Airport extends Terminal {
 
     public void addVehicle(AirVehicle airVehicle) {
         this.airVehicles.add(airVehicle);
-        
+        increaseNumberOfVehicles();
     }
 }

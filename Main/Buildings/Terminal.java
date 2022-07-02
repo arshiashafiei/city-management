@@ -24,6 +24,15 @@ public abstract class Terminal {
         this.employees = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return  "cost: " + cost + '\n' +
+                "city: " + city + '\n' +
+                "name: " + name + '\n' +
+                "address: " + address + '\n' +
+                "area: " + area + '\n' +
+                "number Of Vehicles: " + numberOfVehicles;
+    }
 
     public double getCost() {
         return this.cost;
@@ -85,5 +94,7 @@ public abstract class Terminal {
         this.employees.add(newEmployee);
     }
 
-    
+    public void increaseNumberOfVehicles() {
+        this.numberOfVehicles++;
+    }
 }
