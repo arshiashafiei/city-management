@@ -1,20 +1,26 @@
 package Main.Buildings;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
+import Main.City;
 import Main.Person;
+import Main.Travel.Travel;
+import Main.Travel.Travelable;
+import Main.Vehicles.Vehicle;
 
-public abstract class Terminal {
+public abstract class Terminal implements Travelable {
     private double cost;
-    private String city;
+    private City city;
     private String name;
     private String address;
     private double area;
     private int numberOfVehicles;
     private ArrayList<Person> employees;
+    private ArrayList<Travel> inTravels;
+    private ArrayList<Travel> outTravels;
 
-
-    public Terminal(double cost, String city, String name, String address, double area) {
+    public Terminal(double cost, City city, String name, String address, double area) {
         this.cost = cost;
         this.city = city;
         this.name = name;
@@ -22,6 +28,8 @@ public abstract class Terminal {
         this.area = area;
         this.numberOfVehicles = 0;
         this.employees = new ArrayList<>();
+        this.outTravels = new ArrayList<>();
+        this.inTravels = new ArrayList<>();
     }
 
     @Override
@@ -34,6 +42,55 @@ public abstract class Terminal {
                 "number Of Vehicles: " + numberOfVehicles;
     }
 
+    @Override
+    public void newTravel(Terminal originTerminal, Terminal destinationTerminal, ArrayList<Person> travellers, Person driver, Vehicle vehicle, double cost, String date) {
+        Travel newTravel = new Travel(originTerminal, destinationTerminal, travellers, driver, vehicle, cost, date);
+        originTerminal.getOutTravels().add(newTravel);
+        destinationTerminal.getInTravels().add(newTravel);
+        originTerminal.getEmployees().remove(driver);
+        destinationTerminal.getEmployees().add(driver);
+        originTerminal.getCity().getPersons().removeAll(travellers);
+        originTerminal.getCity().getPersons().remove(driver);
+        destinationTerminal.getCity().getPersons().addAll(travellers);
+        destinationTerminal.getCity().getPersons().add(driver);
+        double budget = originTerminal.getCity().getBudget();
+        originTerminal.getCity().setBudget(budget + calculateTravelCost(travellers, vehicle));
+        // need to address vehicle issue
+    }
+
+    @Override
+    public double calculateTravelCost(ArrayList<Person> travellers, Vehicle vehicle) {
+        return vehicle.getPrice() + travellers.size() * 10;
+    }
+
+    @Override
+    public void sortTravels() {
+        Collections.sort(this.inTravels);
+        Collections.sort(this.outTravels);
+    }
+
+    @Override
+    public void travelsHistory(int type) {
+        if (type == 0) {
+            for (Travel travel : outTravels) {
+                System.out.println(travel.toString());
+                System.out.println("==========");
+            }
+        } else if (type == 1) {
+            for (Travel travel : inTravels) {
+                System.out.println(travel.toString());
+                System.out.println("==========");
+            }
+        } else if (type == 2) {
+            ArrayList<Travel> allTravels = (ArrayList<Travel>) outTravels.clone();
+            allTravels.addAll(inTravels);
+            for (Travel travel : allTravels) {
+                System.out.println(travel.toString());
+                System.out.println("==========");
+            }
+        }
+    }
+
     public double getCost() {
         return this.cost;
     }
@@ -42,11 +99,11 @@ public abstract class Terminal {
         this.cost = cost;
     }
 
-    public String getCity() {
+    public City getCity() {
         return this.city;
     }
 
-    public void setCity(String city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
@@ -96,5 +153,21 @@ public abstract class Terminal {
 
     public void increaseNumberOfVehicles() {
         this.numberOfVehicles++;
+    }
+
+    public ArrayList<Travel> getOutTravels() {
+        return outTravels;
+    }
+
+    public void setOutTravels(ArrayList<Travel> outTravels) {
+        this.outTravels = outTravels;
+    }
+
+    public ArrayList<Travel> getInTravels() {
+        return inTravels;
+    }
+
+    public void setInTravels(ArrayList<Travel> inTravels) {
+        this.inTravels = inTravels;
     }
 }

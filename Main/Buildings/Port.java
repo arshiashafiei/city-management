@@ -2,6 +2,7 @@ package Main.Buildings;
 
 import java.util.ArrayList;
 
+import Main.City;
 import Main.Vehicles.SeaVehicle;
 
 public class Port extends Terminal {
@@ -9,7 +10,7 @@ public class Port extends Terminal {
     private ArrayList<SeaVehicle> seaVehicles;
 
 
-    public Port(double cost, String city, String name, String address, double area, int numberOfDocks) {
+    public Port(double cost, City city, String name, String address, double area, int numberOfDocks) {
         super(cost, city, name, address, area);
         this.numberOfDocks = numberOfDocks;
         this.seaVehicles = new ArrayList<>();

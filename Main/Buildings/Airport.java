@@ -2,6 +2,7 @@ package Main.Buildings;
 
 import java.util.ArrayList;
 
+import Main.City;
 import Main.Vehicles.AirVehicle;
 
 public class Airport extends Terminal {
@@ -10,7 +11,7 @@ public class Airport extends Terminal {
     private ArrayList<AirVehicle> airVehicles;
 
 
-    public Airport(double cost, String city, String name, String address, double area, boolean international, int numberOfRunways) {
+    public Airport(double cost, City city, String name, String address, double area, boolean international, int numberOfRunways) {
         super(cost, city, name, address, area);
         this.international = international;
         this.numberOfRunways = numberOfRunways;

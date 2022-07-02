@@ -2,6 +2,7 @@ package Main.Buildings;
 
 import java.util.ArrayList;
 
+import Main.City;
 import Main.Vehicles.Train;
 
 public class TrainStation extends Terminal {
@@ -10,7 +11,7 @@ public class TrainStation extends Terminal {
     private ArrayList<Train> trains;
 
 
-    public TrainStation(double cost, String city, String name, String address, double area, int inRails, int outRails) {
+    public TrainStation(double cost, City city, String name, String address, double area, int inRails, int outRails) {
         super(cost, city, name, address, area);
         this.inRails = inRails;
         this.outRails = outRails;

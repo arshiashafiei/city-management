@@ -7,9 +7,38 @@ import Main.Vehicles.*;
 
 public class Main {
     private final static Scanner input = new Scanner(System.in);
-    private final static City city = new City(100000);
+    private final static Country country = new Country();
 
-    public static void menu() {
+    public static void mainMenu() {
+        System.out.println("BUDGET: " + country.getBudget());
+        System.out.println(
+                """
+                        -------Menu--------
+                        Enter a number:
+                        1. Build a City
+                        2. Show Cities
+                        3. Enter City Menu
+                        ----------------""");
+        String choice = input.nextLine();
+        switch (choice) {
+            case "1":
+                country.addCity(country.getCityFromUser());
+                break;
+            case "2":
+                country.showCities();
+                break;
+            case "3":
+                cityMenu(country.selectCity());
+                break;
+            default:
+                System.out.println("Try again");
+                break;
+        }
+        mainMenu();
+
+    }
+
+    public static void cityMenu(City city) {
         city.addPerson(new Person("jesus", "christ", 1380, "landOfGod", Jobs.BUS_DRIVER, "Male", 90));
         city.addPerson(new Person("Elon", "Musk", 2020, "Texas", Jobs.PILOT, "Male", 23000));
 
@@ -33,6 +62,9 @@ public class Main {
                         10. Show Hotel Rooms
                         11. Buy Hotel Rooms
                         12. Show Terminal Vehicles
+                        13. Show data
+                        14. Add Travel
+                        15. Show Travels
                         ----------------""");
         String choice = input.nextLine();
         switch (choice) {
@@ -43,7 +75,7 @@ public class Main {
                 city.showTerminals();
                 break;
             case "3":
-                vehicleBuyingPanel(city.selectTerminal());
+                city.vehicleBuyingPanel(city.selectTerminal());
                 break;
             case "4":
                 city.showPeople();
@@ -72,28 +104,21 @@ public class Main {
             case "12":
                 city.showTerminalVehicles();
                 break;
+            case "13":
+                city.showData();
+                break;
+            case "14":
+                break;
             default:
                 System.out.println("Try again");
                 break;
         }
-        menu();
+        cityMenu(city);
 
-    }
-
-    public static void vehicleBuyingPanel(Terminal terminal) {
-        if (terminal instanceof Airport) {
-            city.buyAirVehicle((Airport) terminal);
-        } else if (terminal instanceof BusTerminal) {
-            city.buyBus((BusTerminal) terminal);
-        } else if (terminal instanceof Port) {
-            city.buySeaVehicle((Port) terminal);
-        } else if (terminal instanceof TrainStation) {
-            city.buyTrain((TrainStation) terminal);
-        }
     }
 
     public static void main(String[] args) {
-        menu();
+        mainMenu();
     }
 
 }

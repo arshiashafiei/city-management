@@ -26,6 +26,23 @@ public class City {
         this.budget = budget;
     }
 
+    @Override
+    public String toString() {
+        return  "population: " + population + '\n' +
+                "budget: " + budget;
+    }
+
+    public void showData() {
+        System.out.println(this);
+        System.out.println("Terminals:=============");
+        this.showTerminals();
+        System.out.println("Vehicles:================");
+        this.showVehicles();
+        System.out.println("Hotels:================");
+        this.showHotels();
+        System.out.println("//////////////////////////");
+    }
+
     public ArrayList<Person> getPersons() {
         return this.persons;
     }
@@ -87,7 +104,7 @@ public class City {
         int numberOfRunways = input.nextInt();
         input.nextLine();
 
-        return new Airport(cost, city, name, address, area, international, numberOfRunways);  
+        return new Airport(cost, this, name, address, area, international, numberOfRunways);
     }
 
     public BusTerminal getBusTerminalFromUser() {
@@ -105,7 +122,7 @@ public class City {
         input.nextLine();
 
 
-        return new BusTerminal(cost, city, name, address, area);  
+        return new BusTerminal(cost, this, name, address, area);
     }
 
     public Port getPortFromUser() {
@@ -126,7 +143,7 @@ public class City {
         int numberOfDocks = input.nextInt();
         input.nextLine();
 
-        return new Port(cost, city, name, address, area, numberOfDocks);  
+        return new Port(cost, this, name, address, area, numberOfDocks);
     }
 
     public TrainStation getTrainStationFromUser() {
@@ -150,7 +167,7 @@ public class City {
         int outRails = input.nextInt();
         input.nextLine();
 
-        return new TrainStation(cost, city, name, address, area, inRails, outRails);  
+        return new TrainStation(cost, this, name, address, area, inRails, outRails);
     }
 
     public void chooseTerminal() {
@@ -502,6 +519,18 @@ public class City {
         for (HotelRoom hotelRoom : hotel.getRooms()) {
             System.out.println(hotelRoom.toString());
             System.out.println("===========");
+        }
+    }
+
+    public void vehicleBuyingPanel(Terminal terminal) {
+        if (terminal instanceof Airport) {
+            this.buyAirVehicle((Airport) terminal);
+        } else if (terminal instanceof BusTerminal) {
+            this.buyBus((BusTerminal) terminal);
+        } else if (terminal instanceof Port) {
+            this.buySeaVehicle((Port) terminal);
+        } else if (terminal instanceof TrainStation) {
+            this.buyTrain((TrainStation) terminal);
         }
     }
 }

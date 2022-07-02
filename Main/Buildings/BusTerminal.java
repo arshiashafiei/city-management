@@ -2,12 +2,13 @@ package Main.Buildings;
 
 import java.util.ArrayList;
 
+import Main.City;
 import Main.Vehicles.Bus;
 
 public class BusTerminal extends Terminal {
     private ArrayList<Bus> buses;
 
-    public BusTerminal(double cost, String city, String name, String address, double area) {
+    public BusTerminal(double cost, City city, String name, String address, double area) {
         super(cost, city, name, address, area);
         this.buses = new ArrayList<>();
     }
