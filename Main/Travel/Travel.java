@@ -40,6 +40,17 @@ public class Travel implements Comparable<Travel> {
         } else return Double.compare(this.cost, o.cost);
     }
 
+    @Override
+    public String toString() {
+        return  "--------originTerminal--------\n" + originTerminal.toString() + '\n' +
+                "--------destinationTerminal--------\n" + destinationTerminal.toString() + '\n' +
+                "--------driver--------\n" + driver.toString() + '\n' +
+                "--------vehicle--------\n" + vehicle.toString() + '\n' +
+                "ID: " + ID + '\n' +
+                "cost: " + cost + '\n' +
+                "date: " + date + '\n';
+    }
+
     public Terminal getOriginTerminal() {
         return originTerminal;
     }

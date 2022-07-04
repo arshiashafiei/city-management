@@ -97,8 +97,6 @@ public class City {
         System.out.print("Please Enter Terminal info:\nenter cost:");
         double cost = input.nextDouble();
         input.nextLine();
-        System.out.print("Enter city:");
-        String city = input.nextLine();
         System.out.print("Enter the name:");
         String name = input.nextLine();
         System.out.print("Enter address:");
@@ -120,8 +118,6 @@ public class City {
         System.out.print("Please Enter Terminal info:\nenter cost:");
         double cost = input.nextDouble();
         input.nextLine();
-        System.out.print("Enter city:");
-        String city = input.nextLine();
         System.out.print("Enter the name:");
         String name = input.nextLine();
         System.out.print("Enter address:");
@@ -138,8 +134,6 @@ public class City {
         System.out.print("Please Enter Terminal info:\nenter cost:");
         double cost = input.nextDouble();
         input.nextLine();
-        System.out.print("Enter city:");
-        String city = input.nextLine();
         System.out.print("Enter the name:");
         String name = input.nextLine();
         System.out.print("Enter address:");
@@ -159,8 +153,6 @@ public class City {
         System.out.print("Please Enter Terminal info:\nenter cost:");
         double cost = input.nextDouble();
         input.nextLine();
-        System.out.print("Enter city:");
-        String city = input.nextLine();
         System.out.print("Enter the name:");
         String name = input.nextLine();
         System.out.print("Enter address:");
@@ -291,9 +283,8 @@ public class City {
     public AirVehicle selectAirVehicle() throws InvalidInputException {
         int i = 1;
         for (Vehicle vehicle : this.vehicles) {
-            i++;
             if (vehicle instanceof AirVehicle) {
-                System.out.print(i + ". ");
+                System.out.print(i++ + ". ");
                 System.out.println(vehicle.getID());
             }
         }
@@ -308,9 +299,8 @@ public class City {
     public Bus selectBus() throws InvalidInputException {
         int i = 1;
         for (Vehicle vehicle : this.vehicles) {
-            i++;
             if (vehicle instanceof Bus) {
-                System.out.print(i + ". ");
+                System.out.print(i++ + ". ");
                 System.out.println(vehicle.getID());
             }
         }
@@ -325,13 +315,12 @@ public class City {
     public Train selectTrain() throws InvalidInputException {
         int i = 1;
         for (Vehicle vehicle : this.vehicles) {
-            i++;
             if (vehicle instanceof Train) {
-                System.out.print(i + ". ");
+                System.out.print(i++ + ". ");
                 System.out.println(vehicle.getID());
             }
         }
-        System.out.println("select an air vehicle:");
+        System.out.println("select a Train:");
         String choice = input.nextLine();
         if (this.vehicles.get(Integer.parseInt(choice) - 1) == null) {
             throw new InvalidInputException("Enter correct input");
@@ -342,13 +331,12 @@ public class City {
     public SeaVehicle selectSeaVehicle() throws InvalidInputException {
         int i = 1;
         for (Vehicle vehicle : this.vehicles) {
-            i++;
             if (vehicle instanceof SeaVehicle) {
-                System.out.print(i + ". ");
+                System.out.print(i++ + ". ");
                 System.out.println(vehicle.getID());
             }
         }
-        System.out.println("select an air vehicle:");
+        System.out.println("select a sea vehicle:");
         String choice = input.nextLine();
         if (this.vehicles.get(Integer.parseInt(choice) - 1) == null) {
             throw new InvalidInputException("Enter correct input");
@@ -613,7 +601,7 @@ public class City {
 
         System.out.println("Select destination Terminal:");
         String destinationTerminalName = input.nextLine();
-        Terminal destinationTerminal = findTerminalByName(destinationTerminalName);
+        Terminal destinationTerminal = destinationCity.findTerminalByName(destinationTerminalName);
 
         if (!destinationTerminal.getClass().getTypeName().equals(originTerminal.getClass().getTypeName())) {
             throw new WrongTerminalTypeException("Terminal Types does Not match!");
@@ -622,9 +610,9 @@ public class City {
         String carID = input.nextLine();
         Vehicle vehicle = findVehicleByID(carID, originTerminal);
 
-        if (travellers.size() < vehicle.getCapacity() / 2) {
-            throw new NotEnoughPassengers("Not enough passengers!");
-        }
+//        if (travellers.size() < vehicle.getCapacity() / 2) {
+//            throw new NotEnoughPassengers("Not enough passengers!");
+//        }
         Person driver = selectEmployee(originTerminal);
 
         System.out.println("please enter the date as this format: (yyyy-MM-dd)");
@@ -672,7 +660,7 @@ public class City {
                 }
             }
         }
-        throw new VehicleNotExistException("the input name of Vehicle does not Exist");
+        throw new VehicleNotExistException("the input ID of Vehicle does not Exist");
     }
 
     public void showAllTravels() {
