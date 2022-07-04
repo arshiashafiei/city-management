@@ -2,15 +2,14 @@ package Main;
 
 import java.util.Scanner;
 
-import Main.Buildings.*;
+import Main.Exceptions.*;
 import Main.Vehicles.*;
 
 public class Main {
     private final static Scanner input = new Scanner(System.in);
-    private final static Country country = new Country();
 
     public static void mainMenu() {
-        System.out.println("BUDGET: " + country.getBudget());
+        System.out.println("BUDGET: " + Country.getBudget());
         System.out.println(
                 """
                         -------Menu--------
@@ -22,13 +21,13 @@ public class Main {
         String choice = input.nextLine();
         switch (choice) {
             case "1":
-                country.addCity(country.getCityFromUser());
+                Country.addCity(Country.getCityFromUser());
                 break;
             case "2":
-                country.showCities();
+                Country.showCities();
                 break;
             case "3":
-                cityMenu(country.selectCity());
+                cityMenu(Country.selectCity());
                 break;
             default:
                 System.out.println("Try again");
@@ -39,12 +38,6 @@ public class Main {
     }
 
     public static void cityMenu(City city) {
-        city.addPerson(new Person("jesus", "christ", 1380, "landOfGod", Jobs.BUS_DRIVER, "Male", 90));
-        city.addPerson(new Person("Elon", "Musk", 2020, "Texas", Jobs.PILOT, "Male", 23000));
-
-        city.addVehicle(new Train(200, 12, "tesla", 20, false, 25, 2, 4, Facilities.JACUZZI));
-        city.addVehicle(new Boat(400, 21, "sdf", "diesle", 23, 24, true));
-        city.addVehicle(new Boat(400, 21, "sdf", "diesle", 23, 24, true));
         System.out.println("BUDGET: " + city.getBudget());
         System.out.println(
                 """
@@ -64,7 +57,10 @@ public class Main {
                         12. Show Terminal Vehicles
                         13. Show data
                         14. Add Travel
-                        15. Show Travels
+                        15. Show All Travels
+                        16. Show In Travels
+                        17. Show Out Travels
+                        18. Log Out
                         ----------------""");
         String choice = input.nextLine();
         switch (choice) {
@@ -75,16 +71,28 @@ public class Main {
                 city.showTerminals();
                 break;
             case "3":
-                city.vehicleBuyingPanel(city.selectTerminal());
+                try {
+                    city.vehicleBuyingPanel(city.selectTerminal());
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "4":
                 city.showPeople();
                 break;
             case "5":
-                city.hireEmployee(city.selectTerminal());
+                try {
+                    city.hireEmployee(city.selectTerminal());
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "6":
-                city.showEmployees(city.selectTerminal());
+                try {
+                    city.showEmployees(city.selectTerminal());
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "7":
                 city.showVehicles();
@@ -96,19 +104,47 @@ public class Main {
                 city.showHotels();
                 break;
             case "10":
-                city.showHotelRooms();
+                try {
+                    city.showHotelRooms();
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "11":
-                city.buyHotelRoom();
+                try {
+                    city.buyHotelRoom();
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "12":
-                city.showTerminalVehicles();
+                try {
+                    city.showTerminalVehicles(city.selectTerminal());
+                } catch (InvalidInputException e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
             case "13":
                 city.showData();
                 break;
             case "14":
+                try {
+                    city.addTravel();
+                } catch (InvalidInputException | WrongTerminalTypeException | NotEnoughPassengers e) {
+                    System.out.println(e.getMessage());
+                }
                 break;
+            case "15":
+                city.showAllTravels();
+                break;
+            case "16":
+                city.showInTravels();
+                break;
+            case "17":
+                city.showOutTravels();
+                break;
+            case "18":
+                return;
             default:
                 System.out.println("Try again");
                 break;

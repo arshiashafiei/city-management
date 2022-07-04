@@ -1,56 +1,45 @@
 package Main;
 
-import Main.Buildings.Hotel;
-import Main.Buildings.Terminal;
-import Main.Vehicles.Facilities;
-import Main.Vehicles.Vehicle;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Country {
-    private ArrayList<City> cities;
-    private int population;
-    private double budget;
+    private static ArrayList<City> cities = new ArrayList<>();
+    private static int population = 0;
+    private static double budget = 0;
     private static final Scanner input = new Scanner(System.in);
 
-    public Country() {
-        this.cities = new ArrayList<>();
-        this.population = 0;
-        this.budget = 0;
+    public static void addCity(City newCity) {
+        Country.cities.add(newCity);
+        Country.population += newCity.getPopulation();
+        Country.budget += newCity.getBudget();
     }
 
-    public void addCity(City newCity) {
-        this.cities.add(newCity);
-        this.population += newCity.getPopulation();
-        this.budget += newCity.getBudget();
-    }
-
-    public ArrayList<City> getCities() {
+    public static ArrayList<City> getCities() {
         return cities;
     }
 
-    public void setCities(ArrayList<City> cities) {
-        this.cities = cities;
+    public static void setCities(ArrayList<City> cities) {
+        Country.cities = cities;
     }
 
-    public int getPopulation() {
+    public static int getPopulation() {
         return population;
     }
 
-    public void setPopulation(int population) {
-        this.population = population;
+    public static void setPopulation(int population) {
+        Country.population = population;
     }
 
-    public double getBudget() {
+    public static double getBudget() {
         return budget;
     }
 
-    public void setBudget(double budget) {
-        this.budget = budget;
+    public static void setBudget(double budget) {
+        Country.budget = budget;
     }
 
-    public City getCityFromUser() {
+    public static City getCityFromUser() {
         System.out.print("Please Enter City budget: ");
         double budget = input.nextDouble();
         input.nextLine();
@@ -58,18 +47,18 @@ public class Country {
         return new City(budget);
     }
 
-    public void showCities() {
+    public static void showCities() {
         int i = 1;
-        for (City city : this.cities) {
+        for (City city : Country.cities) {
             System.out.print(i++ + ". ");
             city.showData();
         }
     }
 
-    public City selectCity() {
+    public static City selectCity() {
         showCities();
         System.out.println("select a City:");
         String choice = input.nextLine();
-        return this.cities.get(Integer.parseInt(choice) - 1);
+        return Country.cities.get(Integer.parseInt(choice) - 1);
     }
 }

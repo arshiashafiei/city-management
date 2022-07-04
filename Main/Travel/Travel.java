@@ -5,7 +5,7 @@ import Main.Person;
 import Main.Vehicles.Vehicle;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class Travel implements Comparable<Travel> {
@@ -38,5 +38,77 @@ public class Travel implements Comparable<Travel> {
         } else if (LocalDate.parse(this.date).isBefore(LocalDate.parse(o.date))) {
             return -1;
         } else return Double.compare(this.cost, o.cost);
+    }
+
+    public Terminal getOriginTerminal() {
+        return originTerminal;
+    }
+
+    public void setOriginTerminal(Terminal originTerminal) {
+        this.originTerminal = originTerminal;
+    }
+
+    public Terminal getDestinationTerminal() {
+        return destinationTerminal;
+    }
+
+    public void setDestinationTerminal(Terminal destinationTerminal) {
+        this.destinationTerminal = destinationTerminal;
+    }
+
+    public ArrayList<Person> getTravellers() {
+        return travellers;
+    }
+
+    public void setTravellers(ArrayList<Person> travellers) {
+        this.travellers = travellers;
+    }
+
+    public Person getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Person driver) {
+        this.driver = driver;
+    }
+
+    public Vehicle getVehicle() {
+        return vehicle;
+    }
+
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
+    }
+
+    public static int getTravelCount() {
+        return travelCount;
+    }
+
+    public static void setTravelCount(int travelCount) {
+        Travel.travelCount = travelCount;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
+    }
+
+    public double getCost() {
+        return cost;
+    }
+
+    public void setCost(double cost) {
+        this.cost = cost;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

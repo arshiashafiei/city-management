@@ -43,19 +43,25 @@ public abstract class Terminal implements Travelable {
     }
 
     @Override
-    public void newTravel(Terminal originTerminal, Terminal destinationTerminal, ArrayList<Person> travellers, Person driver, Vehicle vehicle, double cost, String date) {
-        Travel newTravel = new Travel(originTerminal, destinationTerminal, travellers, driver, vehicle, cost, date);
+    public void newTravel(Terminal originTerminal, Terminal destinationTerminal, ArrayList<Person> travellers, Person driver, Vehicle vehicle, String date) {
+        Travel newTravel = new Travel(originTerminal, destinationTerminal, travellers, driver, vehicle, calculateTravelCost(travellers, vehicle), date);
         originTerminal.getOutTravels().add(newTravel);
         destinationTerminal.getInTravels().add(newTravel);
         originTerminal.getEmployees().remove(driver);
         destinationTerminal.getEmployees().add(driver);
         originTerminal.getCity().getPersons().removeAll(travellers);
-        originTerminal.getCity().getPersons().remove(driver);
         destinationTerminal.getCity().getPersons().addAll(travellers);
-        destinationTerminal.getCity().getPersons().add(driver);
         double budget = originTerminal.getCity().getBudget();
         originTerminal.getCity().setBudget(budget + calculateTravelCost(travellers, vehicle));
-        // need to address vehicle issue
+        if (originTerminal instanceof Airport airport) {
+            airport.getAirVehicles().remove(vehicle);
+        } else if (originTerminal instanceof BusTerminal busTerminal) {
+            busTerminal.getBuses().remove(vehicle);
+        } else if (originTerminal instanceof Port port) {
+            port.getSeaVehicles().remove(vehicle);
+        } else if (originTerminal instanceof TrainStation trainStation) {
+            trainStation.getTrains().remove(vehicle);
+        }
     }
 
     @Override
@@ -71,6 +77,7 @@ public abstract class Terminal implements Travelable {
 
     @Override
     public void travelsHistory(int type) {
+        sortTravels();
         if (type == 0) {
             for (Travel travel : outTravels) {
                 System.out.println(travel.toString());

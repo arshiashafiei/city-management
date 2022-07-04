@@ -1,5 +1,7 @@
 package Main.Vehicles;
 
+import java.util.Objects;
+
 public abstract class Vehicle {
     private double price;
     private double capacity;
@@ -21,6 +23,16 @@ public abstract class Vehicle {
                 "capacity: " + capacity + '\n' +
                 "ID: " + ID + '\n' +
                 "factory: " + factory;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Vehicle vehicle = (Vehicle) o;
+
+        return Objects.equals(ID, vehicle.ID);
     }
 
     public double getPrice() {
